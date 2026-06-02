@@ -180,27 +180,10 @@ Abra a porta **8080** disponibilizada pelo Codespaces.
 
 ---
 
-## 📸 Capturas de Tela
-
-Adicione aqui imagens do aplicativo:
-
-```text
-docs/
-├── login.png
-├── dashboard.png
-├── transacoes.png
-└── analise.png
-```
-
-Exemplo:
-
-![Login](docs/login.png)
-
----
 
 ## 👨‍💻 Desenvolvido por
 
-**Marcelo Henrique e equipe**
+**Marcelo Henrique Fernandes Mauricio
 
 Projeto acadêmico desenvolvido para a disciplina de **Desenvolvimento Mobile**.
 
