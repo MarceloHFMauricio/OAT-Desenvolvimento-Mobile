@@ -1,148 +1,207 @@
 # 💰 Meu Dinheiro — Controle Financeiro Pessoal
 
-Aplicativo Flutter de controle financeiro desenvolvido como atividade avaliativa da disciplina de **Desenvolvimento Mobile — UNIFTC**.
+![Flutter](https://img.shields.io/badge/Flutter-3.x-blue?logo=flutter)
+![Riverpod](https://img.shields.io/badge/Riverpod-State%20Management-blue)
+![Firebase](https://img.shields.io/badge/Firebase-Backend-orange?logo=firebase)
+![SQLite](https://img.shields.io/badge/SQLite-Database-blue?logo=sqlite)
+![License](https://img.shields.io/badge/Academic%20Project-UNEX-green)
+
+Aplicativo de **controle financeiro pessoal** desenvolvido em **Flutter** como atividade avaliativa da disciplina de **Desenvolvimento Mobile**.
+
+O projeto permite o gerenciamento de receitas e despesas, autenticação de usuários, sincronização em nuvem, análise financeira e consumo de APIs externas.
 
 ---
 
 ## 📱 Funcionalidades
 
 ### 🔐 Autenticação
-- Cadastro de usuário com nome, e-mail e senha
-- Login com validação completa de campos
-- Autenticação via **Firebase Authentication (REST API)**
-- Fallback local com **SharedPreferences** quando offline
-- Dados persistidos entre sessões
+
+* Cadastro de usuário com nome, e-mail e senha
+* Login com validação de campos
+* Firebase Authentication via REST API
+* Fallback local utilizando SharedPreferences
+* Persistência automática de sessão
 
 ### 📊 Dashboard
-- Saldo atual atualizado automaticamente em tempo real
-- Resumo visual de receitas e despesas
-- Lista de transações com **animações de entrada** (fade + slide)
-- **Skeleton screen** animado enquanto os dados carregam
-- **Feed de Notícias Financeiras** em tempo real (NewsAPI)
-- Tratamento de erro de rede com fallback de dicas financeiras
-- Pull-to-refresh para atualizar dados e notícias
 
-### 💸 Transações (CRUD Completo)
-- Adicionar receitas e despesas via **BottomSheet**
-- Editar transações existentes
-- Excluir com confirmação via **Dialog**
-- Campos: Título, Valor, Categoria, Data e Tipo (Entrada/Saída)
-- Validação completa com `GlobalKey<FormState>` e `TextFormField`
-- Sincronização automática com **Firebase Firestore**
+* Saldo atualizado em tempo real
+* Resumo de receitas e despesas
+* Lista de transações com animações (Fade + Slide)
+* Skeleton Loading durante carregamento
+* Feed de notícias financeiras em tempo real
+* Pull-to-refresh
+* Tratamento de erros e fallback offline
+
+### 💸 Gestão de Transações (CRUD)
+
+* Adicionar receitas e despesas
+* Editar transações existentes
+* Excluir com confirmação
+* Cadastro de:
+
+  * Título
+  * Valor
+  * Categoria
+  * Data
+  * Tipo (Entrada/Saída)
+* Validação completa de formulários
+* Sincronização automática com Firebase Firestore
 
 ### 📈 Análise Financeira
-- Percentual de comprometimento da renda com barra visual
-- Breakdown de despesas por categoria com barras de progresso
-- Indicador visual de saldo positivo/negativo
+
+* Percentual de comprometimento da renda
+* Indicadores visuais de desempenho financeiro
+* Distribuição de gastos por categoria
+* Saldo positivo/negativo destacado visualmente
 
 ---
 
-## 🏗️ Arquitetura — MVVM
+## 🏗️ Arquitetura
+
+O projeto segue o padrão **MVVM (Model-View-ViewModel)**.
+
+```text
 lib/
 ├── models/
-│   ├── user_model.dart           # Modelo de usuário
-│   └── transaction_model.dart    # Modelo de transação (SQLite + Firestore)
+│   ├── user_model.dart
+│   └── transaction_model.dart
+│
 ├── services/
-│   ├── database_service.dart     # Persistência local (SharedPreferences)
-│   ├── firestore_service.dart    # Firebase Auth + Firestore via REST API
-│   └── news_service.dart         # Consumo da NewsAPI
+│   ├── database_service.dart
+│   ├── firestore_service.dart
+│   └── news_service.dart
+│
 ├── viewmodels/
-│   ├── auth_viewmodel.dart       # Lógica de autenticação (Firebase + fallback local)
-│   └── finance_viewmodel.dart    # Lógica financeira com CRUD duplo
+│   ├── auth_viewmodel.dart
+│   └── finance_viewmodel.dart
+│
 ├── providers/
-│   └── app_providers.dart        # Providers Riverpod (DI)
+│   └── app_providers.dart
+│
 ├── views/
-│   ├── auth_view.dart            # Tela de login/cadastro
-│   ├── dashboard_view.dart       # Tela principal com notícias e animações
-│   ├── analysis_view.dart        # Tela de análise financeira
-│   └── transaction_form_sheet.dart # Formulário BottomSheet com validação
+│   ├── auth_view.dart
+│   ├── dashboard_view.dart
+│   ├── analysis_view.dart
+│   └── transaction_form_sheet.dart
+│
 └── main.dart
+```
 
 ---
 
-## 🛠️ Tecnologias e Pacotes
+## 🛠️ Tecnologias Utilizadas
 
-| Pacote | Versão | Uso |
-|--------|--------|-----|
-| `flutter_riverpod` | ^2.5.1 | Gerenciamento de estado + Injeção de Dependência |
-| `shared_preferences` | ^2.3.2 | Persistência local de dados |
-| `sqflite` | ^2.3.3 | Banco de dados SQLite (mobile) |
-| `http` | ^1.2.2 | Firebase REST API + NewsAPI |
-| `intl` | ^0.19.0 | Formatação de moeda e datas |
+| Tecnologia              | Finalidade                      |
+| ----------------------- | ------------------------------- |
+| Flutter                 | Desenvolvimento multiplataforma |
+| Riverpod                | Gerenciamento de estado         |
+| Firebase Authentication | Autenticação                    |
+| Firebase Firestore      | Banco de dados em nuvem         |
+| SQLite                  | Persistência local              |
+| SharedPreferences       | Cache e sessão                  |
+| NewsAPI                 | Notícias financeiras            |
+| HTTP                    | Consumo de APIs                 |
+| Intl                    | Formatação de datas e moedas    |
 
 ---
 
 ## ☁️ Serviços Externos
 
-| Serviço | Uso |
-|---------|-----|
-| **Firebase Authentication** | Cadastro e login de usuários |
-| **Firebase Firestore** | Armazenamento de transações na nuvem |
-| **NewsAPI** | Feed de notícias financeiras em tempo real |
+| Serviço                 | Função                             |
+| ----------------------- | ---------------------------------- |
+| Firebase Authentication | Cadastro e login                   |
+| Firebase Firestore      | Armazenamento em nuvem             |
+| NewsAPI                 | Notícias financeiras em tempo real |
 
 ---
 
-## ✅ Requisitos Atendidos
+## ✅ Critérios Atendidos
 
-### Nível Básico (6 pontos)
-- [x] CRUD completo de transações (adicionar, listar, editar, excluir)
-- [x] Cálculo de saldo automático e reativo no Dashboard
-- [x] Campos: Título, Valor, Data, Tipo e Categoria
-- [x] Validação com `GlobalKey<FormState>` e `TextFormField`
-- [x] Persistência local (SharedPreferences/SQLite)
-- [x] Gerenciamento de estado com **Riverpod**
-- [x] Fluxo de autenticação real (Login + Cadastro)
-- [x] CRUD via BottomSheet e Dialog (sem mudar de rota)
-- [x] Navegação entre 3 telas funcionando
-- [x] Padrão MVVM respeitado
-- [x] Material Design 3
+### Nível Básico
 
-### Nível Avançado (16 pontos)
-- [x] **Riverpod** com `ChangeNotifierProvider` e `FutureProvider`
-- [x] **Injeção de Dependência** via providers
-- [x] **Firebase Firestore** como banco externo
-- [x] **Firebase Authentication** para autenticação real
-- [x] Persistência local robusta com **SharedPreferences** (cache offline)
-- [x] **Estratégia dual**: dados salvos local + nuvem simultaneamente
-- [x] **API externa real** — NewsAPI com feed de notícias financeiras
-- [x] **Skeleton screens** animados durante carregamento
-- [x] **Animações de transição** (fade + slide) nas transações
-- [x] **Tratamento de erros de rede** com fallback e feedback visual
-- [x] **APK gerado** via Codemagic CI/CD
-- [x] Acabamento visual superior com Material Design 3
+* ✅ CRUD completo de transações
+* ✅ Cálculo automático de saldo
+* ✅ Validação de formulários
+* ✅ Persistência local
+* ✅ Navegação entre telas
+* ✅ Gerenciamento de estado
+* ✅ Fluxo completo de autenticação
+* ✅ Material Design 3
+* ✅ Arquitetura MVVM
+
+### Nível Avançado
+
+* ✅ Riverpod + Injeção de Dependência
+* ✅ Firebase Authentication
+* ✅ Firebase Firestore
+* ✅ Estratégia Offline First
+* ✅ Sincronização Local + Nuvem
+* ✅ Consumo de API Externa (NewsAPI)
+* ✅ Skeleton Loading
+* ✅ Animações de interface
+* ✅ Tratamento de falhas de rede
+* ✅ APK gerado via CI/CD
+* ✅ Acabamento visual avançado
 
 ---
 
-## 🚀 Como Rodar no GitHub Codespaces
+## 🚀 Executando no GitHub Codespaces
 
-### 1. Abrir o Codespace
-Acesse o repositório → **Code → Codespaces → Create codespace on main**.
+### 1. Criar um Codespace
 
-O `.devcontainer` configura o ambiente automaticamente.
+```text
+Code → Codespaces → Create codespace on main
+```
 
-### 2. Se o Flutter não estiver no PATH
+### 2. Configurar Flutter
+
 ```bash
 export PATH="$PATH:/workspaces/flutter/bin"
 ```
 
 ### 3. Instalar dependências
+
 ```bash
 cd app_financeiro
 flutter pub get
 ```
 
-### 4. Build de produção
+### 4. Executar versão Web
+
 ```bash
 flutter build web
+
 cd build/web
+
 python3 -m http.server 8080
 ```
 
-Acesse a URL gerada pelo Codespace na porta **8080**.
+Abra a porta **8080** disponibilizada pelo Codespaces.
 
 ---
 
-## 👥 Grupo
+## 📸 Capturas de Tela
 
-Desenvolvido para a disciplina de **Desenvolvimento Mobile**
+Adicione aqui imagens do aplicativo:
+
+```text
+docs/
+├── login.png
+├── dashboard.png
+├── transacoes.png
+└── analise.png
+```
+
+Exemplo:
+
+![Login](docs/login.png)
+
+---
+
+## 👨‍💻 Desenvolvido por
+
+**Marcelo Henrique e equipe**
+
+Projeto acadêmico desenvolvido para a disciplina de **Desenvolvimento Mobile**.
+
 **UNEX — 2026**
