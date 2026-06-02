@@ -39,7 +39,10 @@ class _AuthViewState extends ConsumerState<AuthView> {
     }
 
     if (success && mounted) {
-      await financeVM.loadTransactions(authVM.currentUser!.id!);
+      await financeVM.loadTransactions(
+        authVM.currentUser!.id ?? 1,
+        firebaseUid: authVM.currentUser!.firebaseUid ?? '',
+      );
       Navigator.pushReplacementNamed(context, '/dashboard');
     }
   }

@@ -1,160 +1,148 @@
-# App Financeiro - OAT Desenvolvimento Mobile
+# 💰 Meu Dinheiro — Controle Financeiro Pessoal
 
-## Descrição do Projeto
+Aplicativo Flutter de controle financeiro desenvolvido como atividade avaliativa da disciplina de **Desenvolvimento Mobile — UNIFTC**.
 
-O **App Financeiro** é uma aplicação desenvolvida em Flutter com o objetivo de auxiliar usuários no controle de receitas e despesas pessoais. O sistema permite o cadastro de usuários, autenticação, registro de transações financeiras e análise dos dados cadastrados.
+---
 
-O projeto foi desenvolvido como parte da disciplina **Desenvolvimento Mobile (OAT)**, utilizando boas práticas de organização de código, arquitetura baseada em ViewModels e gerenciamento de estado com Riverpod.
+## 📱 Funcionalidades
 
-## Funcionalidades
+### 🔐 Autenticação
+- Cadastro de usuário com nome, e-mail e senha
+- Login com validação completa de campos
+- Autenticação via **Firebase Authentication (REST API)**
+- Fallback local com **SharedPreferences** quando offline
+- Dados persistidos entre sessões
 
-### Autenticação
+### 📊 Dashboard
+- Saldo atual atualizado automaticamente em tempo real
+- Resumo visual de receitas e despesas
+- Lista de transações com **animações de entrada** (fade + slide)
+- **Skeleton screen** animado enquanto os dados carregam
+- **Feed de Notícias Financeiras** em tempo real (NewsAPI)
+- Tratamento de erro de rede com fallback de dicas financeiras
+- Pull-to-refresh para atualizar dados e notícias
 
-* Cadastro de usuários
-* Login com e-mail e senha
-* Validação de credenciais
+### 💸 Transações (CRUD Completo)
+- Adicionar receitas e despesas via **BottomSheet**
+- Editar transações existentes
+- Excluir com confirmação via **Dialog**
+- Campos: Título, Valor, Categoria, Data e Tipo (Entrada/Saída)
+- Validação completa com `GlobalKey<FormState>` e `TextFormField`
+- Sincronização automática com **Firebase Firestore**
 
-### Controle Financeiro
+### 📈 Análise Financeira
+- Percentual de comprometimento da renda com barra visual
+- Breakdown de despesas por categoria com barras de progresso
+- Indicador visual de saldo positivo/negativo
 
-* Cadastro de receitas
-* Cadastro de despesas
-* Edição de transações
-* Exclusão de transações
-* Listagem das movimentações financeiras
+---
 
-### Análises
-
-* Cálculo de saldo total
-* Resumo de receitas
-* Resumo de despesas
-* Indicadores financeiros
-
-## Tecnologias Utilizadas
-
-* Flutter
-* Dart
-* Riverpod
-* Material Design 3
-
-## Estrutura do Projeto
-
-```text
+## 🏗️ Arquitetura — MVVM
 lib/
-├── main.dart
 ├── models/
-│   ├── user_model.dart
-│   └── transaction_model.dart
-├── providers/
-│   └── app_providers.dart
+│   ├── user_model.dart           # Modelo de usuário
+│   └── transaction_model.dart    # Modelo de transação (SQLite + Firestore)
 ├── services/
-│   └── database_service.dart
+│   ├── database_service.dart     # Persistência local (SharedPreferences)
+│   ├── firestore_service.dart    # Firebase Auth + Firestore via REST API
+│   └── news_service.dart         # Consumo da NewsAPI
 ├── viewmodels/
-│   ├── auth_viewmodel.dart
-│   └── finance_viewmodel.dart
-└── views/
-    ├── auth_view.dart
-    ├── dashboard_view.dart
-    ├── analysis_view.dart
-    └── transaction_form_sheet.dart
-```
+│   ├── auth_viewmodel.dart       # Lógica de autenticação (Firebase + fallback local)
+│   └── finance_viewmodel.dart    # Lógica financeira com CRUD duplo
+├── providers/
+│   └── app_providers.dart        # Providers Riverpod (DI)
+├── views/
+│   ├── auth_view.dart            # Tela de login/cadastro
+│   ├── dashboard_view.dart       # Tela principal com notícias e animações
+│   ├── analysis_view.dart        # Tela de análise financeira
+│   └── transaction_form_sheet.dart # Formulário BottomSheet com validação
+└── main.dart
 
-## Arquitetura
+---
 
-O projeto segue uma organização inspirada no padrão MVVM (Model-View-ViewModel):
+## 🛠️ Tecnologias e Pacotes
 
-### Models
+| Pacote | Versão | Uso |
+|--------|--------|-----|
+| `flutter_riverpod` | ^2.5.1 | Gerenciamento de estado + Injeção de Dependência |
+| `shared_preferences` | ^2.3.2 | Persistência local de dados |
+| `sqflite` | ^2.3.3 | Banco de dados SQLite (mobile) |
+| `http` | ^1.2.2 | Firebase REST API + NewsAPI |
+| `intl` | ^0.19.0 | Formatação de moeda e datas |
 
-Responsáveis pela representação dos dados da aplicação.
+---
 
-### Views
+## ☁️ Serviços Externos
 
-Responsáveis pela interface gráfica e interação com o usuário.
+| Serviço | Uso |
+|---------|-----|
+| **Firebase Authentication** | Cadastro e login de usuários |
+| **Firebase Firestore** | Armazenamento de transações na nuvem |
+| **NewsAPI** | Feed de notícias financeiras em tempo real |
 
-### ViewModels
+---
 
-Responsáveis pelas regras de negócio e gerenciamento do estado.
+## ✅ Requisitos Atendidos
 
-### Services
+### Nível Básico (6 pontos)
+- [x] CRUD completo de transações (adicionar, listar, editar, excluir)
+- [x] Cálculo de saldo automático e reativo no Dashboard
+- [x] Campos: Título, Valor, Data, Tipo e Categoria
+- [x] Validação com `GlobalKey<FormState>` e `TextFormField`
+- [x] Persistência local (SharedPreferences/SQLite)
+- [x] Gerenciamento de estado com **Riverpod**
+- [x] Fluxo de autenticação real (Login + Cadastro)
+- [x] CRUD via BottomSheet e Dialog (sem mudar de rota)
+- [x] Navegação entre 3 telas funcionando
+- [x] Padrão MVVM respeitado
+- [x] Material Design 3
 
-Responsáveis pelo acesso e manipulação dos dados.
+### Nível Avançado (16 pontos)
+- [x] **Riverpod** com `ChangeNotifierProvider` e `FutureProvider`
+- [x] **Injeção de Dependência** via providers
+- [x] **Firebase Firestore** como banco externo
+- [x] **Firebase Authentication** para autenticação real
+- [x] Persistência local robusta com **SharedPreferences** (cache offline)
+- [x] **Estratégia dual**: dados salvos local + nuvem simultaneamente
+- [x] **API externa real** — NewsAPI com feed de notícias financeiras
+- [x] **Skeleton screens** animados durante carregamento
+- [x] **Animações de transição** (fade + slide) nas transações
+- [x] **Tratamento de erros de rede** com fallback e feedback visual
+- [x] **APK gerado** via Codemagic CI/CD
+- [x] Acabamento visual superior com Material Design 3
 
-## Como Executar no GitHub Codespaces
+---
 
-### 1. Abrir o projeto
+## 🚀 Como Rodar no GitHub Codespaces
 
-Acesse o repositório no GitHub e selecione:
+### 1. Abrir o Codespace
+Acesse o repositório → **Code → Codespaces → Create codespace on main**.
 
-```text
-Code → Codespaces → Create Codespace on main
-```
+O `.devcontainer` configura o ambiente automaticamente.
 
-Aguarde o ambiente ser carregado.
-
-### 2. Instalar dependências
-
-Abra o terminal e execute:
-
+### 2. Se o Flutter não estiver no PATH
 ```bash
+export PATH="$PATH:/workspaces/flutter/bin"
+```
+
+### 3. Instalar dependências
+```bash
+cd app_financeiro
 flutter pub get
 ```
 
-### 3. Gerar a versão Web
-
-No ambiente do Codespaces, o comando:
-
-```bash
-flutter run -d web-server
-```
-
-pode apresentar tela branca devido a limitações do ambiente de depuração do Flutter Web.
-
-Por isso, recomenda-se utilizar o processo abaixo.
-
-### 4. Compilar o projeto
-
+### 4. Build de produção
 ```bash
 flutter build web
-```
-
-Ao final deverá aparecer:
-
-```text
-✓ Built build/web
-```
-
-### 5. Executar servidor local
-
-Entre na pasta gerada:
-
-```bash
 cd build/web
-```
-
-Inicie um servidor HTTP:
-
-```bash
 python3 -m http.server 8080
 ```
 
-### 6. Abrir a aplicação
+Acesse a URL gerada pelo Codespace na porta **8080**.
 
-No painel **Ports** do Codespaces:
+---
 
-1. Localize a porta 8080.
-2. Clique em "Open in Browser".
-3. A aplicação será aberta normalmente.
+## 👥 Grupo
 
-
-e servido por um servidor HTTP simples.
-
-## Autor
-
-Marcelo Henrique Fernandes Maurício
-
-## Disciplina
-
-Desenvolvimento Mobile - OAT
-
-## Licença
-
-Projeto desenvolvido exclusivamente para fins acadêmicos.
+Desenvolvido para a disciplina de **Desenvolvimento Mobile**
+**UNEX — 2026**
